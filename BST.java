@@ -23,19 +23,16 @@ class BST<D> {
         return rt;
     }
 
-    public Node search(Node rt, D value) {
-        if ((Integer) value == (Integer) rt.val)
+ public  Node search(Node rt,Integer a ) {
+        if (rt == null || (Integer) rt.val == a) {
             return rt;
-        else if ((Integer) value < (Integer) rt.val) {
-            if (rt.left != null)
-                return search(rt.left, value);
-            else
-                return null;
         } else {
-            if (rt.right != null)
-                return search(rt.right, value);
-            else
-                return null;
+            if (a > (Integer)rt.val) {
+                rt = rt.rc;
+            } else {
+                rt = rt.lc;
+            }
+            return search(rt,a);
         }
     }
 
@@ -62,18 +59,32 @@ class BST<D> {
                 Parent.right = null;
         
         } else if (t.right == null) {
+            if ((Integer)t.val == (Integer)root.val) {
+                    Integer temp = (Integer)root.left.val;
+                    Delete(root.left.val);
+                    root.val = (D)temp;
+                }
+            else{
             Node Parent = FindParent(root, value);
             if((Integer)Parent.val >(Integer) t.val)
                 Parent.left=t.left;
             else
                 Parent.right = t.left;
+            }
         } else if (t.left == null) {
+            if ((Integer)t.val ==(Integer) root.val) {
+                    Integer temp = (Integer)root.right.val;
+                    Delete(root.right.val);
+                    root.val =(D)temp;
+                }
+            else{
             Node Parent = FindParent(root, value);
             if((Integer)Parent.val > (Integer) t.val)
                 Parent.left=t.right;
             else
                 Parent.right = t.right;
-        }
+            }
+            }
         else{
             Node<D> Child = Child(t.right);
             Integer  temp = (Integer)Child.val;
